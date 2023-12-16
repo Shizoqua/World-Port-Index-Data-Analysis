@@ -32,4 +32,4 @@ The following instructions should be adhered to for the purpose of achieving the
 To summarize, this project entailed acquiring the World Port Index dataset from an Access database. The retrieval process was facilitated through the use of the pyodbc and pandas libraries to establish a connection with the Access database. Following this, the dataset was successfully migrated to a PostgreSQL database, a task accomplished using the psycopg2 and SQLAlchemy libraries.
 
 ## Contribution
-Contributions to further enhance and expand this Extract Load (EL) pipeline is highly welcomed. Your involvement can take various forms, such as submitting pull requests or offering valuable feedback. 
+Contributions to further enhance and expand this Extract Load (EL) pipeline is highly welcomed. Your involvement can take various forms, such as submitting pull requests, report issues, or offering valuable feedback. 
