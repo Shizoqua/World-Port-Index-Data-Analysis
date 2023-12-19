@@ -7,6 +7,3 @@ import pyodbc
 import geopy.distance
 import psycopg2
 import math
-from sqlalchemy import create_engine
-from dotenv import  dotenv_values
-dotenv_values()
