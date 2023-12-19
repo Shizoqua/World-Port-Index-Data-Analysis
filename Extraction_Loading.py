@@ -131,4 +131,4 @@ def port_to_distress_call(distress_coords=(32.610982, -38.706256), csv_path='raw
 result = port_to_distress_call()
 conn = get_database_conn()
 result.to_sql(name='nearest_port_to_distress_call', con=conn, if_exists='replace', index=False)
-print('Nearest port with provisions, water, fuel_oil, and diesel to the distress call has been written to PostgreSQL successfully.')
+print('Nearest port with provisions, water, fuel_oil, and diesel to the distress call has been written to PostgreSQL successfully.'
