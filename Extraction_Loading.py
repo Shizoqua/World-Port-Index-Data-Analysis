@@ -109,26 +109,3 @@ def distance(lat1, lon1, lat2, lon2):
     distance = earth_radius * c
     return distance
 
-def port_to_distress_call(distress_coords=(32.610982, -38.706256), csv_path='raw/worldport.csv'):
-    required_services = ['supplies_provisions', 'supplies_water', 'supplies_fuel_oil', 'supplies_diesel_oil']
-    wpi_data = pd.read_csv(csv_path)
-    # Imputing missing values with 'N' for "No"
-    wpi_data[required_services] = wpi_data[required_services].fillna('N')
-    # Calculating distances to all ports from the distress call coordinates using the formula above
-    wpi_data['distance_in_km'] = wpi_data.apply(
-        lambda row: distance(
-            distress_coords[0], distress_coords[1],
-            row['latitude_degrees'] + row['latitude_minutes'] / 60, row['longitude_degrees'] + row['longitude_minutes'] / 60
-        ),
-        axis=1
-    )
-    nearest_port_with_services = wpi_data[wpi_data[required_services].apply(lambda x: 'Y' in x.values, axis=1)]
-    if nearest_port_with_services.empty:
-        print('No ports meet the criteria for provisions, water, fuel_oil, and diesel.')
-        return pd.DataFrame(columns=['wpi_country_code', 'main_port_name', 'latitude_degrees', 'longitude_degrees'])
-    nearest_port = nearest_port_with_services.sort_values('distance_in_km').head(1)[['wpi_country_code', 'main_port_name', 'latitude_degrees', 'longitude_degrees']]
-    return nearest_port
-result = port_to_distress_call()
-conn = get_database_conn()
-result.to_sql(name='nearest_port_to_distress_call', con=conn, if_exists='replace', index=False)
-print('Nearest port with provisions, water, fuel_oil, and diesel to the distress call has been written to PostgreSQL successfully.'
